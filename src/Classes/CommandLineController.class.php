@@ -6,6 +6,9 @@
  */
 
 require_once 'Classes/Validator.class.php';
+require_once 'Classes/HTTP/HTTPGet.class.php';
+require_once 'Classes/HTTP/HTTPPost.class.php';
+require_once 'Classes/Apple/AppleLogin.class.php';
 
 class CommandLineController {
 	
@@ -18,16 +21,16 @@ class CommandLineController {
 	const kTeamLongKey = 'team';
 	
 	private $arrValidationErrors;
-	private $username;
-	private $password;
-	private $teamId;
+	private $strUsername;
+	private $strPassword;
+	private $strTeamId;
 	
 	public function __construct() {
 		
 		$this->arrValidationErrors = array();
-		$this->username            = null;
-		$this->password            = null;
-		$this->teamId              = null;
+		$this->strUsername            = null;
+		$this->strPassword            = null;
+		$this->strTeamId              = null;
 	}
 	
 	public function getApplicationArguments() {
@@ -44,7 +47,7 @@ class CommandLineController {
 	
 	public function validateAndSetUsername() {
 		try {
-			$this->username = Validator::compareAndValidate(
+			$this->strUsername = Validator::compareAndValidate(
 					$this->getApplicationArguments(),
 					self::kUsernameShortKey, 
 					self::kUsernameLongKey
@@ -56,7 +59,7 @@ class CommandLineController {
 	
 	public function validateAndSetPassword() {		
 		try {
-			$this->password = Validator::compareAndValidate(
+			$this->strPassword = Validator::compareAndValidate(
 					$this->getApplicationArguments(), 
 					self::kPasswordShortKey, 
 					self::kPasswordLongKey
@@ -68,7 +71,7 @@ class CommandLineController {
 	
 	public function validateAndSetTeam() {
 		try {
-			$this->teamId = Validator::compareAndValidate(
+			$this->strTeamId = Validator::compareAndValidate(
 					$this->getApplicationArguments(), 
 					self::kTeamShortKey, 
 					self::kTeamLongKey, 
@@ -95,7 +98,8 @@ class CommandLineController {
 			
 			return 1;
 		}
-		//$arrApplicationArguments = getopt('u:p:t:', array('username:', 'password', 'team'));
-		//print_r($arrApplicationArguments);
+	
+		$appleLogin = new AppleLogin($this->strUsername, $this->strPassword);
+		$appleLogin->performLogin();
 	}
 }
