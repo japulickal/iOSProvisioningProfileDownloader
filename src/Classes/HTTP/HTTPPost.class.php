@@ -14,6 +14,8 @@ class HTTPPost {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $arrData);
+		curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
+		curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
 		
 		$this->strData = curl_exec($ch);		
 		$this->strLastUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);

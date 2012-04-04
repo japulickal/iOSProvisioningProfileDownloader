@@ -37,16 +37,9 @@ class AppleLogin {
 					)
 			);
 		
-		var_dump(
-		array (
-				'theAccountName' => urlencode($this->strUsername),
-				'theAccountPW'  => urlencode($this->strPassword),
-				'1.Continue.x'  => '44',
-				'wosid'         => $this->strWosid
-		)
-		);
-		
-		var_dump($strData);
+		if (preg_match('/Your Apple ID or password was entered incorrectly/', $strData)) {
+			throw new Exception('Invalid Username / Password');
+		}
 	}
 	
 	

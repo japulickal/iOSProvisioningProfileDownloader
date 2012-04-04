@@ -9,6 +9,8 @@ require_once 'Classes/Validator.class.php';
 require_once 'Classes/HTTP/HTTPGet.class.php';
 require_once 'Classes/HTTP/HTTPPost.class.php';
 require_once 'Classes/Apple/AppleLogin.class.php';
+require_once 'Classes/Apple/AppleTeamSelect.class.php';
+require_once 'Classes/Apple/AppleFetchProfile.class.php';
 
 class CommandLineController {
 	
@@ -91,6 +93,10 @@ class CommandLineController {
 	
 	
 	public function execute() {
+		
+		echo "Initializing ...\n";
+		
+		echo "Validating inputs ...\n";
 		$this->validateArguments();
 		
 		if (count($this->arrValidationErrors) > 0) {
@@ -98,8 +104,24 @@ class CommandLineController {
 			
 			return 1;
 		}
+		
+		@unlink('/tmp/cookies.txt');
+		
+		echo "Login to developer portal with username {$this->strUsername}...\n";
 	
-		$appleLogin = new AppleLogin($this->strUsername, $this->strPassword);
-		$appleLogin->performLogin();
+		$objAppleLogin = new AppleLogin($this->strUsername, $this->strPassword);
+		$objAppleLogin->performLogin();
+		
+		if (!empty($this->strTeamId)) {
+			echo "Selecting team {$this->strTeamId} ...\n";
+			
+			$objAppleTeamSelect = new AppleTeamSelect($this->strTeamId);
+			$objAppleTeamSelect->performTeamSelect();
+		}
+
+		echo "Fetch Profiles ...\n";
+
+		$objAppleFetchProfile = new AppleFetchProfile();
+		$objAppleFetchProfile->perfromFetchProfile();
 	}
 }
