@@ -1,9 +1,9 @@
 <?php
 
-/** 
+/**
  * This file consist of the Class CommandLineController. This class is responsible
- * for controlling the eniter logic flow 
- * 
+ * for controlling the eniter logic flow
+ *
  * PHP Version 5.2
  *
  * @category Controller
@@ -13,16 +13,16 @@
  * @link     http://www.joseantony.com
  */
 
-require_once 'Classes/Validator.class.php';
-require_once 'Classes/HTTP/HTTPGet.class.php';
-require_once 'Classes/HTTP/HTTPPost.class.php';
-require_once 'Classes/Apple/AppleLogin.class.php';
-require_once 'Classes/Apple/AppleTeamSelect.class.php';
-require_once 'Classes/Apple/AppleFetchProfile.class.php';
+require_once dirname(__FILE__).'/Validator.class.php';
+require_once dirname(__FILE__).'/HTTP/HTTPGet.class.php';
+require_once dirname(__FILE__).'/HTTP/HTTPPost.class.php';
+require_once dirname(__FILE__).'/Apple/AppleLogin.class.php';
+require_once dirname(__FILE__).'/Apple/AppleTeamSelect.class.php';
+require_once dirname(__FILE__).'/Apple/AppleFetchProfile.class.php';
 
 /**
  * CommandLineController will fetch and validate all the inputs.
- * Once the inputs are validated it will start Login, select the user team 
+ * Once the inputs are validated it will start Login, select the user team
  * and then download the provisioning profiles
  *
  * PHP Version 5.2
@@ -67,7 +67,7 @@ class CommandLineController
 
 
 	/**
-	 * Get the application arguments 
+	 * Get the application arguments
 	 *
 	 * @return array
 	 */
@@ -87,7 +87,7 @@ class CommandLineController
 
 	/**
 	 * Validate the username and set that to instance variable
-	 * 
+	 *
 	 * @return null
 	 */
 
@@ -99,7 +99,9 @@ class CommandLineController
 				self::USERNAME_SHORT_KEY,
 				self::USERNAME_LONG_KEY
 			);
-		} catch (Exception $e) {
+		} catch (ArgumentMisMatchException $objArgumentMisMatchException) {
+			$this->_arrValidationErrors[] = 'Username error! Make sure that you use either -u or --username option';
+		} catch (ArgumentMissingException $objArgumentMissingException) {
 			$this->_arrValidationErrors[] = 'Username error! Make sure that you use either -u or --username option';
 		}
 
@@ -108,7 +110,7 @@ class CommandLineController
 
 	/**
 	 * Validate the password and set that to instance variable
-	 * 
+	 *
 	 * @return null
 	 */
 
@@ -120,7 +122,9 @@ class CommandLineController
 				self::PASSWORD_SHORT_KEY,
 				self::PASSWORD_LONG_KEY
 			);
-		} catch (Exception $e) {
+		} catch (ArgumentMisMatchException $objArgumentMisMatchException) {
+			$this->_arrValidationErrors[] = 'Password error! Make sure that you use either -p or --password option';
+		} catch (ArgumentMissingException $objArgumentMissingException) {
 			$this->_arrValidationErrors[] = 'Password error! Make sure that you use either -p or --password option';
 		}
 
@@ -129,7 +133,7 @@ class CommandLineController
 
 	/**
 	 * Validate the team and set that to instance variable
-	 * 
+	 *
 	 * @return null
 	 */
 
@@ -154,7 +158,7 @@ class CommandLineController
 	 * username
 	 * password
 	 * teamId
-	 * 
+	 *
 	 * @return null
 	 */
 
@@ -172,7 +176,7 @@ class CommandLineController
 	 * This function will first validate the user input and Login to the apple
 	 * After login depending on the team parameter it will try to select the team
 	 * Then it will start downloading the provisioning profiles
-	 * 
+	 *
 	 * @return int
 	 */
 

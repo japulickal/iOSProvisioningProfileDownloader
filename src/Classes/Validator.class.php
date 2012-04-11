@@ -30,14 +30,15 @@ class Validator
 	/**
 	 * Compare two arguments and check if both are same if that exist. Throws error
 	 * if both doesn't match
-	 * 
+	 *
 	 * @param array  $arrApplicationArguments Arguments array
 	 * @param string $strShortKey             short key
 	 * @param string $strLongKey              long key
 	 * @param string $boolOptional            optional check flag
-	 * 
-	 * @throws Exception
-	 * 
+	 *
+	 * @throws ArgumentMisMatchException
+	 * @throws ArgumentMissingException
+	 *
 	 * @return null
 	 */
 
@@ -56,7 +57,7 @@ class Validator
 			if (strcmp($arrApplicationArguments[$strShortKey], $arrApplicationArguments[$strLongKey]) === 0) {
 				return $arrApplicationArguments[$strShortKey];
 			} else {
-				throw new Exception('Argument inconsitancy');
+				throw new ArgumentMisMatchException('Argument inconsitancy');
 			}
 		}
 
@@ -71,7 +72,7 @@ class Validator
 		}
 
 		if ($boolOptional === false) {
-			throw new Exception('Argument missing');
+			throw new ArgumentMissingException('Argument missing');
 		}
 
 		return null;

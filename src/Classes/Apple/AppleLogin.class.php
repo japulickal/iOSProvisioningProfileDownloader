@@ -73,7 +73,7 @@ class AppleLogin
 	/**
 	 * Performs the actual login by posting the username and password
 	 *
-	 * @throws Exception
+	 * @throws InvalidLoginException
 	 *
 	 * @return void
 	 */
@@ -93,7 +93,7 @@ class AppleLogin
 		);
 
 		if (preg_match('/Your Apple ID or password was entered incorrectly/', $strData) === 1) {
-			throw new Exception('Invalid Username / Password');
+			throw new InvalidLoginException('Invalid Username / Password');
 		}
 
 	}//end _login()
@@ -102,7 +102,7 @@ class AppleLogin
 	/**
 	 * Function to fetch the login information like Wosid and TheAuxValue
 	 *
-	 * @throws Exception
+	 * @throws InvalidDomDocumentException
 	 *
 	 * @return void
 	 */
@@ -118,7 +118,7 @@ class AppleLogin
 		$bolDomStatus   = @$objDomDocument->loadHTML($strData);
 
 		if ($bolDomStatus === false) {
-			throw new Exception('Invalid Dom Document');
+			throw new InvalidDomDocumentException('Invalid Dom Document');
 		}
 
 		$objDomFormElements = $objDomDocument->getElementsByTagName('form');
