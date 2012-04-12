@@ -73,14 +73,18 @@ class CommandLineController
 	 */
 	public function getApplicationArguments()
 	{
-		return getopt(
-			self::USERNAME_SHORT_KEY.':'.self::PASSWORD_SHORT_KEY.':'.self::TEAM_SHORT_KEY.':',
-			array(
-			 self::USERNAME_LONG_KEY.':',
-			 self::PASSWORD_LONG_KEY.'password:',
-			 self::TEAM_LONG_KEY.'team:',
-			)
-		);
+		if (php_sapi_name() === "cli") {
+			return getopt(
+				self::USERNAME_SHORT_KEY.':'.self::PASSWORD_SHORT_KEY.':'.self::TEAM_SHORT_KEY.':',
+				array(
+				 self::USERNAME_LONG_KEY.':',
+				 self::PASSWORD_LONG_KEY.'password:',
+				 self::TEAM_LONG_KEY.'team:',
+				)
+			);
+		} else {
+			return $_REQUEST;
+		}
 
 	}//end getApplicationArguments()
 
