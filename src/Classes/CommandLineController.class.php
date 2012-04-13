@@ -150,7 +150,7 @@ class CommandLineController
 				self::TEAM_LONG_KEY,
 				true
 			);
-		} catch (Exception $e) {
+		} catch (ArgumentMisMatchException $e) {
 			$this->_arrValidationErrors[] = 'Team error! Make sure that you use either -t or --team option';
 		}
 
