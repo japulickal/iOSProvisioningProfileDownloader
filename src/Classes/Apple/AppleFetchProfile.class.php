@@ -83,7 +83,7 @@ class AppleFetchProfile
 	private function _fetchProfiles()
 	{
 		foreach ($this->_arrProfileUrls as $intKey => $strProfileUrl) {
-			echo "Fetching profile $strProfileUrl\n";
+			CommonOutput::getCommonOutput()->output("Fetching profile $strProfileUrl");
 
 			$httpGet = new HTTPGet();
 			$strData = $httpGet->get($strProfileUrl);
@@ -108,7 +108,7 @@ class AppleFetchProfile
 		preg_match('/<key>UUID<\\/key>\n	<string>(.*)<\\/string>/', $strData, $arrMatches);
 
 		$strUser = trim(get_current_user());
-		echo "Saving profile {$arrMatches[1]}\n";
+		CommonOutput::getCommonOutput()->output("Saving profile {$arrMatches[1]}");
 
 		file_put_contents("/Users/$strUser/Library/MobileDevice/Provisioning Profiles/{$arrMatches[1]}.mobileprovision", $strData);
 

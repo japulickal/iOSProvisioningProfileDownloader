@@ -60,13 +60,16 @@ class Validator
 				throw new ArgumentMisMatchException('Argument inconsitancy');
 			}
 		}
-
-		if (isset($arrApplicationArguments[$strShortKey]) === true) {
+		if (isset($arrApplicationArguments[$strShortKey]) === true
+			&& (strlen(trim($arrApplicationArguments[$strShortKey])) > 0)
+		) {
 			$arrApplicationArguments[$strShortKey] = trim($arrApplicationArguments[$strShortKey]);
 			return $arrApplicationArguments[$strShortKey];
 		}
 
-		if (isset($arrApplicationArguments[$strLongKey]) === true) {
+		if (isset($arrApplicationArguments[$strLongKey]) === true
+			&& (strlen(trim($arrApplicationArguments[$strLongKey])) > 0)
+		) {
 			$arrApplicationArguments[$strLongKey] = trim($arrApplicationArguments[$strLongKey]);
 			return $arrApplicationArguments[$strLongKey];
 		}

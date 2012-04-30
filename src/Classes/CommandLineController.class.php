@@ -20,6 +20,10 @@ require_once dirname(__FILE__).'/Apple/AppleLogin.class.php';
 require_once dirname(__FILE__).'/Apple/AppleTeamSelect.class.php';
 require_once dirname(__FILE__).'/Apple/AppleFetchProfile.class.php';
 
+require_once dirname(__FILE__).'/Common/CommonOutput.class.php';
+require_once dirname(__FILE__).'/Common/CommonCliOutput.class.php';
+require_once dirname(__FILE__).'/Common/CommonHttpOutput.class.php';
+
 /**
  * CommandLineController will fetch and validate all the inputs.
  * Once the inputs are validated it will start Login, select the user team
@@ -186,14 +190,14 @@ class CommandLineController
 
 	public function execute()
 	{
-		echo "Initializing ...\n";
+		CommonOutput::getCommonOutput()->output("Initializing ...");
 
-		echo "Validating inputs ...\n";
+		CommonOutput::getCommonOutput()->output("Validating inputs ...");
 		$this->validateArguments();
 
 		if (count($this->_arrValidationErrors) > 0) {
 			foreach ($this->_arrValidationErrors as $strError) {
-				echo "$strError\n";
+				CommonOutput::getCommonOutput()->output($strError);
 			}
 
 			return 1;
@@ -201,19 +205,19 @@ class CommandLineController
 
 		@unlink('/tmp/cookies.txt');
 
-		echo "Login to developer portal with username {$this->_strUsername}...\n";
+		CommonOutput::getCommonOutput()->output("Login to developer portal with username {$this->_strUsername}...");
 
 		$objAppleLogin = new AppleLogin($this->_strUsername, $this->_strPassword);
 		$objAppleLogin->performLogin();
 
 		if (empty($this->_strTeamId) === false) {
-			echo "Selecting team {$this->_strTeamId} ...\n";
+			CommonOutput::getCommonOutput()->output("Selecting team {$this->_strTeamId} ...");
 
 			$objAppleTeamSelect = new AppleTeamSelect($this->_strTeamId);
 			$objAppleTeamSelect->performTeamSelect();
 		}
 
-		echo "Fetch Profiles ...\n";
+		CommonOutput::getCommonOutput()->output("Fetch Profiles ...");
 
 		$objAppleFetchProfile = new AppleFetchProfile();
 		$objAppleFetchProfile->perfromFetchProfile();
