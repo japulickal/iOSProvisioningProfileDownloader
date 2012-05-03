@@ -46,7 +46,7 @@ class CommandLineController
 
 	const USERNAME_LONG_KEY = 'username';
 	const PASSWORD_LONG_KEY = 'password';
-	const TEAM_LONG_KEY     = 'team';
+	const TEAM_LONG_KEY     = 'teamId';
 
 	private $_arrValidationErrors;
 
@@ -82,8 +82,8 @@ class CommandLineController
 				self::USERNAME_SHORT_KEY.':'.self::PASSWORD_SHORT_KEY.':'.self::TEAM_SHORT_KEY.':',
 				array(
 				 self::USERNAME_LONG_KEY.':',
-				 self::PASSWORD_LONG_KEY.'password:',
-				 self::TEAM_LONG_KEY.'team:',
+				 self::PASSWORD_LONG_KEY.':',
+				 self::TEAM_LONG_KEY.':',
 				)
 			);
 		} else {
