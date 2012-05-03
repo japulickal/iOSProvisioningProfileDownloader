@@ -210,18 +210,22 @@ class CommandLineController
 		$objAppleLogin = new AppleLogin($this->_strUsername, $this->_strPassword);
 		$objAppleLogin->performLogin();
 
-		if (empty($this->_strTeamId) === false) {
-			CommonOutput::getCommonOutput()->output("Selecting team {$this->_strTeamId} ...");
+		try {
+			if (empty($this->_strTeamId) === false) {
+				CommonOutput::getCommonOutput()->output("Selecting team {$this->_strTeamId} ...");
 
-			$objAppleTeamSelect = new AppleTeamSelect($this->_strTeamId);
-			$objAppleTeamSelect->performTeamSelect();
+				$objAppleTeamSelect = new AppleTeamSelect($this->_strTeamId);
+				$objAppleTeamSelect->performTeamSelect();
+			}
+
+			CommonOutput::getCommonOutput()->output("Fetch Profiles ...");
+
+			$objAppleFetchProfile = new AppleFetchProfile();
+			$objAppleFetchProfile->perfromFetchProfile();
+		} catch(InvalidTeamIdException $objException) {
+		    CommonOutput::getCommonOutput()->output($objException->getMessage());
 		}
-
-		CommonOutput::getCommonOutput()->output("Fetch Profiles ...");
-
-		$objAppleFetchProfile = new AppleFetchProfile();
-		$objAppleFetchProfile->perfromFetchProfile();
-
+		
 		return 0;
 
 	}//end execute()
