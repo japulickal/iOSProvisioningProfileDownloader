@@ -155,7 +155,7 @@ class CommandLineController
 				true
 			);
 		} catch (ArgumentMisMatchException $e) {
-			$this->_arrValidationErrors[] = 'Team error! Make sure that you use either -t or --team option';
+			$this->_arrValidationErrors[] = 'Team error! Make sure that you use either -t or --teamId option';
 		}
 
 	}//end validateAndSetTeam()

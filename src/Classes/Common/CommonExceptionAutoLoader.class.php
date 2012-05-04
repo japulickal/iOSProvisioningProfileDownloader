@@ -15,7 +15,7 @@
 /**
  * When initialized this class register aspl
  *
- * @category Apple
+ * @category Common
  * @package  Classes
  * @author   Jose Antony <jose@joseantony.com>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
